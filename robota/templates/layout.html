@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<title>Robota</title>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/robota.css') }}">
+<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap-tab.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap-button.js') }}"></script>
+<body>
+<div class="container-fluid">
+<div class="row-fluid">
+<div class="span2">
+<!-- sidebar -->
+<h1>Robota</h1>
+<ul class="nav nav-list">
+<li><a href="#"><i class="icon-home"></i>Home</a></li>
+<li><a href="/jobs/"><i class="icon-folder-close"></i>Jobs</a></li>
+<li>
+{% if not session.logged_in %}
+<a href="{{ url_for('login') }}">log in</a>
+{% else %}
+<a href="{{ url_for('logout') }}">log out</a>
+{% endif %}
+</li>
+</ul>
+</div>
+
+<div class="span10">
+<!-- body -->
+  {% for category, message in get_flashed_messages(True) %}
+    <div class="alert alert-{{ category }}">
+    <a class="close" data-dismiss="alert">x</a>
+    {{ message }}
+    </div>
+  {% endfor %}
+  {% block body %}{% endblock %}
+</div>
+</div>
+</div>
+</body>
+</html>

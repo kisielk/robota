@@ -23,13 +23,34 @@ function checkInverse() {
     unchecked.attr('checked', 'checked');
     checked.removeAttr('checked');
 };
+
+function getSelectedJobs() {
+    return $(":checkbox.job_checkbox:checked").map(function() {
+        return $(this).data("job");
+    }).get()
+};
+
+function deleteJobs(jobs) {
+    
+};
+
+function deleteSelectedJobs() {
+    deleteJobs(getSelectedJobs());
+};
 </script>
+
 <div class="btn-toolbar">
+
 <div class="btn-group">
-<div class="btn" onclick="checkAll()">All</div>
-<div class="btn" onclick="unCheckAll()">None</div>
-<div class="btn" onclick="checkInverse()">Inverse</div>
+<div class="btn btn-small" onclick="checkAll()">All</div>
+<div class="btn btn-small" onclick="unCheckAll()">None</div>
+<div class="btn btn-small" onclick="checkInverse()">Inverse</div>
 </div>
+
+<div class="btn-group">
+<div class="btn btn-small btn-danger" onclick="deleteSelectedJobs()">Delete</div>
+</div>
+
 </div>
 
   <table class="table table-striped">
@@ -39,7 +60,7 @@ function checkInverse() {
   <tbody>
   {% for job in jobs %}
   <tr>
-  <td><input type="checkbox" class="job_checkbox" id="chk_job_{{ job.id }}" name="chk_job_{{ job.id }}"></td>
+  <td><input type="checkbox" class="job_checkbox" data-job="{{ job.id }}"></td>
   <td>{{ job.id }}</td>
   <td>{{ job.name }}</td>
   </tr>

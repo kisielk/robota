@@ -1,20 +1,20 @@
-import sqlite3
+from .app import db
 
 
-SCHEMA = """create table jobs (
-id integer primary key autoincrement,
-name string not null,
-script string not null
-);"""
+class Job(db.Model):
+    __tablename__ = "jobs"
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120), nullable=False)
+    script = db.Column(db.Text, nullable=False)
+
+    def __init__(self, name, script):
+        self.name = name
+        self.script = script
+
+    def __repr__(self):
+        return '<Job %r>' % self.id
 
 
-def connect_db(url):
-    return sqlite3.connect(url)
-
-
-def init_db(url):
-    from contextlib import closing
-
-    with closing(connect_db(url)) as db:
-        db.cursor().executescript(SCHEMA)
-        db.commit()
+def init_db():
+    db.create_all()
